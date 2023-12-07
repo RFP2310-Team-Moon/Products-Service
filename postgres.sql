@@ -9,23 +9,23 @@ const Product = sequelize.define('Product', {
     primaryKey: true,
   },
   name: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
   slogan: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
   category: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
   default_price: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
 });
@@ -38,15 +38,15 @@ const Style = sequelize.define('Style', {
     primaryKey: true,
   },
   name: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
   original_price: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
   sale_price: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
   'default': {
@@ -63,11 +63,11 @@ const Photo = sequelize.define('Photo', {
     primaryKey: true,
   },
   url: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
   thumbnail_url: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
 });
@@ -79,12 +79,12 @@ const Sku = sequelize.define('Sku', {
     autoIncrement: true,
     primaryKey: true,
   },
-  quantity: {
-    type: DataTypes.INTEGER,
+  size: {
+    type: DataTypes.STRING(1000),
     allowNull: false,
   },
-  size: {
-    type: DataTypes.STRING,
+  quantity: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 });
@@ -97,11 +97,24 @@ const Feature = sequelize.define('Feature', {
     primaryKey: true,
   },
   feature: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
     allowNull: true,
   },
   value: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1000),
+    allowNull: true,
+  },
+});
+
+const Related = sequelize.define('Related', {
+  related_product_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  related_products: {
+    type: DataTypes.ARRAY(DataTypes.INTEGER),
     allowNull: true,
   },
 });
@@ -117,5 +130,8 @@ Sku.belongsTo(Style, { foreignKey: 'styleid' });
 
 Product.hasMany(Feature, { foreignKey: 'product_id' });
 Feature.belongsTo(Product, { foreignKey: 'product_id' });
+
+Product.hasMany(Related, { foreignKey: 'product_id' });
+Related.belongsTo(Product, { foreignKey: 'product_id' });
 
 module.exports = { Product, Style, Photo, Sku, Feature };

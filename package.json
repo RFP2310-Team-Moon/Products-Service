@@ -4,11 +4,7 @@
   "description": "Backend service for the products module",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
-    "start": "nodemon server/index.js",
-=======
     "start": "node server/index.js",
->>>>>>> 8bd9ac190264898789337e031deca97325d743d3
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

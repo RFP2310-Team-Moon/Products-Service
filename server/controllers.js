@@ -55,13 +55,13 @@ module.exports = {
     getProductStyles: async (req, res) => {
       try {
         const { id: product_id } = req.params;
-        const styles = await db.Style.findAll({
+        const styles = await Style.findAll({
           attributes: [
-            'id',
+            'style_id',
             'name',
             'original_price',
             'sale_price',
-            'default_style',
+            'default',
             [
               db.Sequelize.fn(
                 'array_agg',
@@ -92,17 +92,19 @@ module.exports = {
           ],
           include: [
             {
-              model: db.Photo,
+              model: Photo,
               attributes: [],
             },
             {
-              model: db.Sku,
+              model: Sku,
               attributes: [],
             },
           ],
           where: { product_id },
-          group: ['styles.id'],
+          group: ['styles_id'],
         });
+
+        console.log(styles);
 
         const resultArray =
           styles.length > 0 ? styles[0].toJSON() : { product_id, result: [] };
@@ -118,12 +120,21 @@ module.exports = {
       try {
         const { id } = req.params;
         const relatedProducts = await Related.findAll({
+          attributes: [
+            [
+              db.sequelize.fn(
+                'array_agg',
+                db.sequelize.col('related_product_id')
+              ),
+              'result',
+            ],
+          ],
           where: { product_id: id },
-          attributes: ['related_products'],
+          group: ['product_id'],
+          raw: true,
         });
-
         const resultArray =
-          relatedProducts.length > 0 ? relatedProducts[0].related_products : [];
+          relatedProducts.length > 0 ? relatedProducts[0].result : [];
 
         res.status(200).send(resultArray);
       } catch (error) {

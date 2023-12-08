@@ -56,7 +56,7 @@ const Style = sequelize.define('Style', {
 });
 
 const Photo = sequelize.define('Photo', {
-  photos_id: {
+  id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     autoIncrement: true,
@@ -70,6 +70,9 @@ const Photo = sequelize.define('Photo', {
     type: DataTypes.STRING(1000),
     allowNull: true,
   },
+},
+{
+  timestamps: false,
 });
 
 const Sku = sequelize.define('Sku', {
@@ -87,6 +90,9 @@ const Sku = sequelize.define('Sku', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+},
+{
+  timestamps: false,
 });
 
 const Feature = sequelize.define('Feature', {
@@ -107,16 +113,19 @@ const Feature = sequelize.define('Feature', {
 });
 
 const Related = sequelize.define('Related', {
-  related_product_id: {
+  id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     autoIncrement: true,
     primaryKey: true,
   },
-  related_products: {
+  related_product_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+},
+{
+  timestamps: false,
 });
 
 

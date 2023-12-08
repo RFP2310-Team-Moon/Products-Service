@@ -1,4 +1,12 @@
 const db = require('./db.js');
+const {
+  Product,
+  Style,
+  Photo,
+  Sku,
+  Feature,
+  Related,
+} = require('../postgres.sql');
 
 module.exports = {
   products: {
@@ -8,10 +16,10 @@ module.exports = {
         const page = !req.query.count ? 1 : Number(req.query.page);
         const start = (page - 1) * count;
 
-        const products = await db.Product.findAll({
+        const products = await Product.findAll({
           offset: start,
           limit: count,
-          order: [['id', 'ASC']],
+          order: [['product_id', 'ASC']],
         });
         res.status(200).send(products);
       } catch (error) {
@@ -23,12 +31,13 @@ module.exports = {
     getProductInfo: async (req, res) => {
       try {
         const { id } = req.params;
-        const productInfo = await db.Product.findOne({
-          where: { id },
+        const productInfo = await Product.findOne({
+          where: { product_id: id },
           include: [
             {
-              model: db.Feature,
+              model: Feature,
               attributes: ['feature', 'value'],
+              where: { product_id: id },
             },
           ],
         });
@@ -108,22 +117,13 @@ module.exports = {
     getRelatedProducts: async (req, res) => {
       try {
         const { id } = req.params;
-        const relatedProducts = await db.Related.findAll({
-          attributes: [
-            [
-              db.Sequelize.fn(
-                'array_agg',
-                db.Sequelize.col('related_product_id')
-              ),
-              'result',
-            ],
-          ],
-          where: { current_product_id: id },
-          group: ['product.id'],
+        const relatedProducts = await Related.findAll({
+          where: { product_id: id },
+          attributes: ['related_products'],
         });
 
         const resultArray =
-          relatedProducts.length > 0 ? relatedProducts[0].result : [];
+          relatedProducts.length > 0 ? relatedProducts[0].related_products : [];
 
         res.status(200).send(resultArray);
       } catch (error) {

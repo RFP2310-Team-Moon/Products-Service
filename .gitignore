@@ -132,12 +132,8 @@ dist
 
 .eslintrc.json
 
-<<<<<<< HEAD
 .prettierrc
 
 data/products.csv
 data/styles.csv
 *.csv
-=======
-.prettierrc
->>>>>>> 8bd9ac190264898789337e031deca97325d743d3

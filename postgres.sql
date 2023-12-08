@@ -114,10 +114,11 @@ const Related = sequelize.define('Related', {
     primaryKey: true,
   },
   related_products: {
-    type: DataTypes.ARRAY(DataTypes.INTEGER),
+    type: DataTypes.INTEGER,
     allowNull: true,
   },
 });
+
 
 Product.hasMany(Style, { foreignKey: 'product_id' });
 Style.belongsTo(Product, { foreignKey: 'product_id' });
@@ -125,8 +126,8 @@ Style.belongsTo(Product, { foreignKey: 'product_id' });
 Style.hasMany(Photo, { foreignKey: 'style_id' });
 Photo.belongsTo(Style, { foreignKey: 'style_id' });
 
-Style.hasMany(Sku, { foreignKey: 'styleid' });
-Sku.belongsTo(Style, { foreignKey: 'styleid' });
+Style.hasMany(Sku, { foreignKey: 'style_id' });
+Sku.belongsTo(Style, { foreignKey: 'style_id' });
 
 Product.hasMany(Feature, { foreignKey: 'product_id' });
 Feature.belongsTo(Product, { foreignKey: 'product_id' });
@@ -134,4 +135,4 @@ Feature.belongsTo(Product, { foreignKey: 'product_id' });
 Product.hasMany(Related, { foreignKey: 'product_id' });
 Related.belongsTo(Product, { foreignKey: 'product_id' });
 
-module.exports = { Product, Style, Photo, Sku, Feature };
+module.exports = { Product, Style, Photo, Sku, Feature, Related };

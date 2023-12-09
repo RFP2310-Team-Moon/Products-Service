@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('./server/db.js');
 
-const Product = sequelize.define('Product', {
-  product_id: {
+const product = sequelize.define('product', {
+  id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     autoIncrement: true,
@@ -28,9 +28,12 @@ const Product = sequelize.define('Product', {
     type: DataTypes.STRING(1000),
     allowNull: true,
   },
+},
+{
+  timestamps: false,
 });
 
-const Style = sequelize.define('Style', {
+const style = sequelize.define('style', {
   style_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -49,13 +52,16 @@ const Style = sequelize.define('Style', {
     type: DataTypes.STRING(1000),
     allowNull: true,
   },
-  'default': {
+  'default?': {
     type: DataTypes.BOOLEAN,
     allowNull: true,
   },
+},
+{
+  timestamps: false,
 });
 
-const Photo = sequelize.define('Photo', {
+const photo = sequelize.define('photo', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -75,7 +81,7 @@ const Photo = sequelize.define('Photo', {
   timestamps: false,
 });
 
-const Sku = sequelize.define('Sku', {
+const sku = sequelize.define('sku', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -95,8 +101,8 @@ const Sku = sequelize.define('Sku', {
   timestamps: false,
 });
 
-const Feature = sequelize.define('Feature', {
-  feature_id: {
+const feature = sequelize.define('feature', {
+  id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     autoIncrement: true,
@@ -110,9 +116,12 @@ const Feature = sequelize.define('Feature', {
     type: DataTypes.STRING(1000),
     allowNull: true,
   },
+},
+{
+  timestamps: false,
 });
 
-const Related = sequelize.define('Related', {
+const related = sequelize.define('related', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -129,19 +138,19 @@ const Related = sequelize.define('Related', {
 });
 
 
-Product.hasMany(Style, { foreignKey: 'product_id' });
-Style.belongsTo(Product, { foreignKey: 'product_id' });
+product.hasMany(style, { foreignKey: 'product_id' });
+style.belongsTo(product, { foreignKey: 'product_id' });
 
-Style.hasMany(Photo, { foreignKey: 'style_id' });
-Photo.belongsTo(Style, { foreignKey: 'style_id' });
+style.hasMany(photo, { foreignKey: 'style_id' });
+photo.belongsTo(style, { foreignKey: 'style_id' });
 
-Style.hasMany(Sku, { foreignKey: 'style_id' });
-Sku.belongsTo(Style, { foreignKey: 'style_id' });
+style.hasMany(sku, { foreignKey: 'style_id' });
+sku.belongsTo(style, { foreignKey: 'style_id' });
 
-Product.hasMany(Feature, { foreignKey: 'product_id' });
-Feature.belongsTo(Product, { foreignKey: 'product_id' });
+product.hasMany(feature, { foreignKey: 'product_id' });
+feature.belongsTo(product, { foreignKey: 'product_id' });
 
-Product.hasMany(Related, { foreignKey: 'product_id' });
-Related.belongsTo(Product, { foreignKey: 'product_id' });
+product.hasMany(related, { foreignKey: 'product_id' });
+related.belongsTo(product, { foreignKey: 'product_id' });
 
-module.exports = { Product, Style, Photo, Sku, Feature, Related };
+module.exports = { product, style, photo, sku, feature, related };

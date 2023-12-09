@@ -1,11 +1,14 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-shadow */
+/* eslint-disable camelcase */
 const db = require('./db.js');
 const {
-  Product,
-  Style,
-  Photo,
-  Sku,
-  Feature,
-  Related,
+  product,
+  style,
+  photo,
+  sku,
+  feature,
+  related,
 } = require('../postgres.sql');
 
 module.exports = {
@@ -16,10 +19,10 @@ module.exports = {
         const page = !req.query.count ? 1 : Number(req.query.page);
         const start = (page - 1) * count;
 
-        const products = await Product.findAll({
+        const products = await product.findAll({
           offset: start,
           limit: count,
-          order: [['product_id', 'ASC']],
+          order: [['id', 'ASC']],
         });
         res.status(200).send(products);
       } catch (error) {
@@ -31,11 +34,11 @@ module.exports = {
     getProductInfo: async (req, res) => {
       try {
         const { id } = req.params;
-        const productInfo = await Product.findOne({
-          where: { product_id: id },
+        const productInfo = await product.findOne({
+          where: { id },
           include: [
             {
-              model: Feature,
+              model: feature,
               attributes: ['feature', 'value'],
               where: { product_id: id },
             },
@@ -55,59 +58,62 @@ module.exports = {
     getProductStyles: async (req, res) => {
       try {
         const { id: product_id } = req.params;
-        const styles = await Style.findAll({
+        const styles = await style.findAll({
           attributes: [
             'style_id',
             'name',
             'original_price',
             'sale_price',
-            'default',
-            [
-              db.Sequelize.fn(
-                'array_agg',
-                db.Sequelize.fn(
-                  'json_build_object',
-                  'thumbnail_url',
-                  db.Sequelize.col('photos.thumbnail_url'),
-                  'url',
-                  db.Sequelize.col('photos.url')
-                )
-              ),
-              'photos',
-            ],
-            [
-              db.Sequelize.fn(
-                'json_object_agg',
-                db.Sequelize.col('skus.id'),
-                db.Sequelize.fn(
-                  'json_build_object',
-                  'quantity',
-                  db.Sequelize.col('skus.quantity'),
-                  'size',
-                  db.Sequelize.col('skus.size')
-                )
-              ),
-              'skus',
-            ],
+            'default?',
           ],
           include: [
             {
-              model: Photo,
-              attributes: [],
+              model: photo,
+              attributes: ['thumbnail_url', 'url'],
             },
             {
-              model: Sku,
-              attributes: [],
+              model: sku,
+              attributes: ['id', 'quantity', 'size'],
             },
           ],
           where: { product_id },
-          group: ['styles_id'],
+          group: ['style.style_id', 'photos.id', 'skus.id'],
         });
 
-        console.log(styles);
-
         const resultArray =
-          styles.length > 0 ? styles[0].toJSON() : { product_id, result: [] };
+          styles.length > 0
+            ? {
+                product_id,
+                results: styles.map((style) => {
+                  const photos = style.photos.map(({ thumbnail_url, url }) => ({
+                    thumbnail_url,
+                    url,
+                  }));
+
+                  const skus = style.skus.reduce(
+                    (acc, { id, quantity, size }) => {
+                      acc[id] = {
+                        quantity,
+                        size,
+                      };
+                      return acc;
+                    },
+                    {}
+                  );
+
+                  return {
+                    style_id: style.style_id,
+                    name: style.name,
+                    original_price: style.original_price,
+                    sale_price:
+                      style.sale_price !== 'null' ? style.sale_price : '0',
+                    'default?': style['default?'],
+                    photos,
+                    skus,
+                  };
+                }),
+              }
+            : { product_id, results: [] };
 
         res.status(200).send(resultArray);
       } catch (error) {
@@ -119,7 +125,7 @@ module.exports = {
     getRelatedProducts: async (req, res) => {
       try {
         const { id } = req.params;
-        const relatedProducts = await Related.findAll({
+        const relatedProducts = await related.findAll({
           attributes: [
             [
               db.sequelize.fn(

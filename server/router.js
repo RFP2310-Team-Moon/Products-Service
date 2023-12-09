@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 const router = require('express').Router();
 const controllers = require('./controllers.js');
 

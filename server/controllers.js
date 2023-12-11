@@ -105,8 +105,7 @@ module.exports = {
                     style_id: style.style_id,
                     name: style.name,
                     original_price: style.original_price,
-                    sale_price:
-                      style.sale_price !== 'null' ? style.sale_price : '0',
+                    sale_price: style.sale_price,
                     'default?': style['default?'],
                     photos,
                     skus,

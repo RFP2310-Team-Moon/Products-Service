@@ -23,6 +23,7 @@
     "express": "^4.18.2",
     "pg": "^8.11.3",
     "pg-copy-streams": "^6.0.6",
+    "redis": "^4.6.11",
     "sequelize": "^6.35.1"
   },
   "devDependencies": {

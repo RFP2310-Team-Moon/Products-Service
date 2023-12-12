@@ -2,6 +2,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable camelcase */
 const db = require('./db.js');
+// const { redisClient } = require('./db');
 const {
   product,
   style,
@@ -56,8 +57,17 @@ module.exports = {
     },
 
     getProductStyles: async (req, res) => {
+      const { id: product_id } = req.params;
+      // const key = `P${product_id}`;
+      // let response;
+
       try {
-        const { id: product_id } = req.params;
+        // const cacheResults = await redisClient.get(key);
+
+        // if (cacheResults) {
+        //   response = JSON.parse(cacheResults);
+        //   res.status(200).send(response);
+        // } else {
         const styles = await style.findAll({
           attributes: [
             'style_id',
@@ -113,8 +123,11 @@ module.exports = {
                 }),
               }
             : { product_id, results: [] };
-
+        // await redisClient.set(key, JSON.stringify(resultArray), {
+        //   EX: 600,
+        // });
         res.status(200).send(resultArray);
+        // }
       } catch (error) {
         console.error('Error retrieving product styles:', error);
         res.status(500).send('Internal Server Error');

@@ -1,4 +1,5 @@
 require('dotenv').config();
+const redis = require('redis');
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
@@ -11,6 +12,15 @@ const sequelize = new Sequelize(
     port: process.env.PORT,
   }
 );
+
+// let redisClient;
+
+// (async () => {
+//   redisClient = redis.createClient({ port: 3000 });
+//   redisClient.on('error', (error) => console.error('Error: ', error));
+
+//   await redisClient.connect();
+// })();
 
 async function testConnection() {
   try {
@@ -26,4 +36,5 @@ async function testConnection() {
 
 testConnection();
 
+// module.exports = { sequelize, redisClient };
 module.exports = { sequelize };

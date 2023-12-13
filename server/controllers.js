@@ -2,6 +2,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable camelcase */
 const db = require('./db.js');
+require('dotenv').config();
 // const { redisClient } = require('./db');
 const {
   product,
@@ -13,6 +14,16 @@ const {
 } = require('../postgres.sql');
 
 module.exports = {
+  loaderIO: {
+    getVerification: async (req, res) => {
+      try {
+        res.status(200).send(process.env.LOADER);
+      } catch (error) {
+        console.error('error with LoaderIO');
+        res.status(500).send();
+      }
+    },
+  },
   products: {
     getProducts: async (req, res) => {
       try {

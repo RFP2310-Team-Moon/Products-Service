@@ -27,8 +27,14 @@ module.exports = {
   products: {
     getProducts: async (req, res) => {
       try {
-        const count = !req.query.count ? 5 : Number(req.query.count);
-        const page = !req.query.count ? 1 : Number(req.query.page);
+        // const count = !req.query.count ? 5 : Number(req.query.count);
+        // const page = !req.query.count ? 1 : Number(req.query.page);
+        const count = !req.query.count
+          ? Math.floor(Math.random() * (10 - 1 + 1)) + 1
+          : Number(req.query.count);
+        const page = !req.query.page
+          ? Math.floor(Math.random() * (10 - 1 + 1)) + 1
+          : Number(req.query.page);
         const start = (page - 1) * count;
 
         const products = await product.findAll({
@@ -45,7 +51,8 @@ module.exports = {
 
     getProductInfo: async (req, res) => {
       try {
-        const { id } = req.params;
+        // const { id } = req.params;
+        const id = Math.floor(Math.random() * (1000011 - 900010 + 1)) + 900010;
         const productInfo = await product.findOne({
           where: { id },
           include: [
@@ -68,9 +75,11 @@ module.exports = {
     },
 
     getProductStyles: async (req, res) => {
-      const { id: product_id } = req.params;
+      // const { id: product_id } = req.params;
       // const key = `P${product_id}`;
       // let response;
+      const product_id =
+        Math.floor(Math.random() * (92194 - 82975 + 1)) + 82975;
 
       try {
         // const cacheResults = await redisClient.get(key);
@@ -147,7 +156,8 @@ module.exports = {
 
     getRelatedProducts: async (req, res) => {
       try {
-        const { id } = req.params;
+        // const { id } = req.params;
+        const id = Math.floor(Math.random() * (232648 - 209384 + 1)) + 209384;
         const relatedProducts = await related.findAll({
           attributes: [
             [

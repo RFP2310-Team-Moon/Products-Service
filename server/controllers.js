@@ -69,6 +69,8 @@ module.exports = {
 
     getProductStyles: async (req, res) => {
       const { id: product_id } = req.params;
+      const page = parseInt(req.query.page, 10) || 1;
+      const pageSize = parseInt(req.query.pageSize, 10) || 5;
       // const key = `P${product_id}`;
       // let response;
 
@@ -91,53 +93,24 @@ module.exports = {
             {
               model: photo,
               attributes: ['thumbnail_url', 'url'],
+              separate: true,
             },
             {
               model: sku,
               attributes: ['id', 'quantity', 'size'],
+              separate: true,
             },
           ],
           where: { product_id },
-          //group: ['style.style_id', 'photos.id', 'skus.id'],
+          limit: pageSize,
+          offset: (page - 1) * pageSize,
         });
 
-        const resultArray =
-          styles.length > 0
-            ? {
-                product_id,
-                results: styles.map((style) => {
-                  const photos = style.photos.map(({ thumbnail_url, url }) => ({
-                    thumbnail_url,
-                    url,
-                  }));
-
-                  const skus = style.skus.reduce(
-                    (acc, { id, quantity, size }) => {
-                      acc[id] = {
-                        quantity,
-                        size,
-                      };
-                      return acc;
-                    },
-                    {}
-                  );
-
-                  return {
-                    style_id: style.style_id,
-                    name: style.name,
-                    original_price: style.original_price,
-                    sale_price: style.sale_price,
-                    'default?': style['default?'],
-                    photos,
-                    skus,
-                  };
-                }),
-              }
-            : { product_id, results: [] };
+        const resultStyles = { product_id, results: styles };
         // await redisClient.set(key, JSON.stringify(resultArray), {
         //   EX: 600,
         // });
-        res.status(200).send(resultArray);
+        res.status(200).send(resultStyles);
         // }
       } catch (error) {
         console.error('Error retrieving product styles:', error);

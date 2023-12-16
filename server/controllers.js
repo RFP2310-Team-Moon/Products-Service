@@ -98,7 +98,7 @@ module.exports = {
             },
           ],
           where: { product_id },
-          group: ['style.style_id', 'photos.id', 'skus.id'],
+          //group: ['style.style_id', 'photos.id', 'skus.id'],
         });
 
         const resultArray =

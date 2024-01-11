@@ -25,6 +25,9 @@
     <li>
       <a href="#endpoints">Endpoints</a>
     </li>
+    <li>
+      <a href="#database-schema">Database Schema</a>
+    </li>
   </ol>
 </details>
 
@@ -153,3 +156,7 @@ DB_NAME=(database name)
     LOADER_IO_KEY  response will be a string of the Loader IO key to demonstrate access to the service
 
 </details>
+
+# Database Schema
+<a id='database-schema'></a>
+![ProductsSchema](https://github.com/RFP2310-Team-Moon/Products-Service/assets/144174704/b54397ad-c4ae-4fa2-ad1a-6ead6b9a77a6)

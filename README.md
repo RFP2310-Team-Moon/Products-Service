@@ -81,3 +81,19 @@ DB_NAME=(database name)
    ```sh
    npm run start
    ```
+
+# Endpoints
+<a id='endpoints'></a>
+<details>
+  <summary>/products [GET]</summary>
+  <p></p>
+  <div>Request:<div>
+
+    query uses pagination or defaults to 5 count and 1 page
+
+  <p></p>
+  <div>Response:</div>
+
+    [{id, name, slogan, description, category, default_price}]
+
+</details>

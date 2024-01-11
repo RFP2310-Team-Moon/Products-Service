@@ -1,6 +1,3 @@
-/* eslint-disable import/extensions */
-/* eslint-disable no-shadow */
-/* eslint-disable camelcase */
 const db = require('./db.js');
 require('dotenv').config();
 // const { redisClient } = require('./db');

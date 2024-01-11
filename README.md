@@ -125,3 +125,31 @@ DB_NAME=(database name)
     {product_id, results: [{style_id, name, original_price, sale_price, default?, photos: [{thumbnail_url, url}], skus: {sku_id: {quantity, size}}}] response will be an object with results as an array of style objects 
 
 </details>
+
+<details>
+  <summary>/products/:id/related [GET]</summary>
+  <p></p>
+  <div>Request:<div>
+
+    query must contain a valid product id
+
+  <p></p>
+  <div>Response:</div>
+
+    [product_id] response will be an array of related product_ids
+
+</details>
+
+<details>
+  <summary>/${process.env.LOADER} [GET]</summary>
+  <p></p>
+  <div>Request:<div>
+
+    .env file must have a valid LOADER IO Key
+
+  <p></p>
+  <div>Response:</div>
+
+    LOADER_IO_KEY  response will be a string of the Loader IO key to demonstrate access to the service
+
+</details>

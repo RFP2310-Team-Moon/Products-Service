@@ -94,6 +94,34 @@ DB_NAME=(database name)
   <p></p>
   <div>Response:</div>
 
-    [{id, name, slogan, description, category, default_price}]
+    [{id, name, slogan, description, category, default_price}]  response will be an array of product objects of size equal to pagination or default
+
+</details>
+
+<details>
+  <summary>/products/:id [GET]</summary>
+  <p></p>
+  <div>Request:<div>
+
+    query must contain a valid product id
+
+  <p></p>
+  <div>Response:</div>
+
+    {id, name, slogan, description, category, default_price, features: [{feature, value}]} response will be a products object with features as an array of objects {feature, value}
+
+</details>
+
+<details>
+  <summary>/products/:id/styles [GET]</summary>
+  <p></p>
+  <div>Request:<div>
+
+    query must contain a valid product id
+
+  <p></p>
+  <div>Response:</div>
+
+    {product_id, results: [{style_id, name, original_price, sale_price, default?, photos: [{thumbnail_url, url}], skus: {sku_id: {quantity, size}}}] response will be an object with results as an array of style objects 
 
 </details>

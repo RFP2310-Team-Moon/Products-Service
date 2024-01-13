@@ -28,6 +28,9 @@
     <li>
       <a href="#database-schema">Database Schema</a>
     </li>
+    <li>
+      <a href="#system-architecture">System Architecture</a>
+    </li>
   </ol>
 </details>
 
@@ -166,3 +169,8 @@ DB_NAME=(database name)
 # Database Schema
 <a id='database-schema'></a>
 ![ProductsSchema](https://github.com/RFP2310-Team-Moon/Products-Service/assets/144174704/b54397ad-c4ae-4fa2-ad1a-6ead6b9a77a6)
+
+# System Architecture
+<a id='system-architecture'></a>
+![SystemArchitecture](https://github.com/RFP2310-Team-Moon/Products-Service/assets/144174704/2b572099-f420-44fe-ae6a-874a844f280b)
+

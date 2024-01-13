@@ -50,6 +50,27 @@ RESTful API for our products detail page application, which you can find <a href
 ![AWS EC2](https://img.shields.io/badge/aws-ec2-orange.svg?style=for-the-badge&logo=aws-ec2&logoColor=white)
 ![Amazon Route 53 Badge](https://img.shields.io/badge/Amazon%20Route%2053-8C4FFF?logo=amazonroute53&logoColor=fff&style=for-the-badge)
 
+### 🌟 Project Overview:
+The Products Service API is designed to enhance the backend capabilities of an existing monolithic architecture, addressing system requirements such as achieving 1000 requests per second (RPS), a 2000ms latency threshold, and maintaining an error rate of less than 1%. To assess and optimize performance, tools such as LoaderIO, NewRelic, and K6 were employed.
+
+The optimization strategies encompass four primary methods:
+
+1. Caching: Implementing caching mechanisms for faster content delivery.
+2. Load Balancing and Horizontal Scaling: Distributing resources efficiently through load balancing and horizontal scaling.
+3. Server Configuration: Fine-tuning server configurations to optimize performance.
+4. Redundancy for Failovers: Establishing redundancy measures to ensure failover capabilities in case of system disruptions.
+
+### 📈 Performance Results:
+
+#### Target Performance:
+- [ ] Throughput: 100 RPS
+- [ ] Latency: 2000 ms
+- [ ] Error Rate: <1% rate
+
+#### Actual Performance:
+- [ ] Throughput: ~5000 RPS
+- [ ] Latency: 62 ms
+- [ ] Error Rate: 0% rate
 
 # Getting Started
 

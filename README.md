@@ -63,12 +63,12 @@ The optimization strategies encompass four primary methods:
 ### 📈 Performance Results:
 
 #### Target Performance:
-- [ ] Throughput: 100 RPS
+- [ ] Throughput: 1000 RPS
 - [ ] Latency: 2000 ms
 - [ ] Error Rate: <1% rate
 
 #### Actual Performance:
-- [ ] Throughput: ~5000 RPS
+- [ ] Throughput: > 5000 RPS
 - [ ] Latency: 62 ms
 - [ ] Error Rate: 0% rate
 

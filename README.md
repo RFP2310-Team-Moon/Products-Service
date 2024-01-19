@@ -1,4 +1,4 @@
-# Products Server
+# Products Server/ Clothify API
 
 <details>
   <summary>Table of Contents</summary>

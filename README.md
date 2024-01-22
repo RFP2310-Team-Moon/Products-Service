@@ -194,4 +194,4 @@ DB_NAME=(database name)
 # System Architecture
 <a id='system-architecture'></a>
 
-![SystemArchitecture2](https://github.com/RFP2310-Team-Moon/Products-Service/assets/144174704/4ea3d6b9-84c3-4de4-9805-8f0d3201bdc0)
+![SystemArchitecture2](https://github.com/RFP2310-Team-Moon/Products-Service/assets/144174704/d49bff30-e04f-4465-84c3-e45b96c93a74)

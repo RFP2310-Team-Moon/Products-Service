@@ -2,7 +2,7 @@
 
 After implementing load balancer with least connections and caching, we’ve received a substantial improvement in performance and stability that is quantified below:
 
-### Indexing [Localhost](http://Localhost) Postman Tests Prior to Deployment
+### Indexing Localhost Postman Tests Prior to Deployment
 
 | Endpoint | Original Latency | Indexing Latency | Percentage |
 | --- | --- | --- | --- |

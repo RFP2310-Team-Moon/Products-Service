@@ -12,7 +12,7 @@ After implementing load balancer with least connections and caching, we’ve rec
 - **Before Optimization Specs:**
     - 1 EC2 Database, 1 EC2 Service
 - **After Optimization Specs:**
-    - 1 EC2 Database, 3 EC2 Service, 1 EC2 Load Balancer, Caching, Least Connections Load Balancing Algorithm, Indexing, AWS Route 53 System Failover Policy
+    - 1 EC2 Database, 4 EC2 Service, 2 EC2 Load Balancer, Caching, Least Connections Load Balancing Algorithm, Indexing, AWS Route 53 System Failover Policy
 - **Test method for data below:**
     - 1000 clients per second
     - Duration: 1 minute

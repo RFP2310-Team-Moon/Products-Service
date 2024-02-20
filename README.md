@@ -72,6 +72,11 @@ The optimization strategies encompass four primary methods:
 - [ ] Latency: 62 ms
 - [ ] Error Rate: 0% rate
 
+### 📖 Systems Design Engineering Report:
+Read the engineering report in markdown format here:
+
+[Systems Design Engineering Report](https://github.com/RFP2310-Team-Moon/Products-Service/blob/c31fc1ceb658da1282151ea5f1ef49841a0e4524/Systems%20Design%20Engineering%20Report.md)
+
 # Getting Started
 
 <a id='getting-started'></a>

@@ -1,14 +1,12 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const { sequelize } = require('../server/db.js');
-const { Style } = require('../postgres.sql');
+const { sequelize } = require('../server/config/db');
+const { Style } = require('../server/models/initDB');
 require('dotenv').config();
 
 const rows = [];
 
-fs.createReadStream(
-  `${process.env.DATA_PATH}/Products-Service/data/styles.csv`
-)
+fs.createReadStream(`${process.env.DATA_PATH}/Products-Service/data/styles.csv`)
   .pipe(csv())
   .on('data', (row) => {
     rows.push(row);

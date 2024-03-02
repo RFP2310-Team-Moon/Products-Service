@@ -1,6 +1,6 @@
-const db = require('./db.js');
+const db = require('../config/db');
 require('dotenv').config();
-// const { redisClient } = require('./db');
+const { redisClient } = require('../config/db');
 const {
   product,
   style,
@@ -8,7 +8,7 @@ const {
   sku,
   feature,
   related,
-} = require('../postgres.sql');
+} = require('../models/initDB');
 
 module.exports = {
   loaderIO: {
@@ -68,47 +68,47 @@ module.exports = {
       const { id: product_id } = req.params;
       const page = parseInt(req.query.page, 10) || 1;
       const pageSize = parseInt(req.query.pageSize, 10) || 5;
-      // const key = `P${product_id}`;
-      // let response;
+      const key = `P${product_id}`;
+      let response;
 
       try {
-        // const cacheResults = await redisClient.get(key);
+        const cacheResults = await redisClient.get(key);
 
-        // if (cacheResults) {
-        //   response = JSON.parse(cacheResults);
-        //   res.status(200).send(response);
-        // } else {
-        const styles = await style.findAll({
-          attributes: [
-            'style_id',
-            'name',
-            'original_price',
-            'sale_price',
-            'default?',
-          ],
-          include: [
-            {
-              model: photo,
-              attributes: ['thumbnail_url', 'url'],
-              separate: true,
-            },
-            {
-              model: sku,
-              attributes: ['id', 'quantity', 'size'],
-              separate: true,
-            },
-          ],
-          where: { product_id },
-          limit: pageSize,
-          offset: (page - 1) * pageSize,
-        });
+        if (cacheResults) {
+          response = JSON.parse(cacheResults);
+          res.status(200).send(response);
+        } else {
+          const styles = await style.findAll({
+            attributes: [
+              'style_id',
+              'name',
+              'original_price',
+              'sale_price',
+              'default?',
+            ],
+            include: [
+              {
+                model: photo,
+                attributes: ['thumbnail_url', 'url'],
+                separate: true,
+              },
+              {
+                model: sku,
+                attributes: ['id', 'quantity', 'size'],
+                separate: true,
+              },
+            ],
+            where: { product_id },
+            limit: pageSize,
+            offset: (page - 1) * pageSize,
+          });
 
-        const resultStyles = { product_id, results: styles };
-        // await redisClient.set(key, JSON.stringify(resultArray), {
-        //   EX: 600,
-        // });
-        res.status(200).send(resultStyles);
-        // }
+          const resultStyles = { product_id, results: styles };
+          await redisClient.set(key, JSON.stringify(resultStyles), {
+            EX: 600,
+          });
+          res.status(200).send(resultStyles);
+        }
       } catch (error) {
         console.error('Error retrieving product styles:', error);
         res.status(500).send('Internal Server Error');

@@ -13,14 +13,14 @@ const sequelize = new Sequelize(
   }
 );
 
-// let redisClient;
+let redisClient;
 
-// (async () => {
-//   redisClient = redis.createClient({ port: 3000 });
-//   redisClient.on('error', (error) => console.error('Error: ', error));
+(async () => {
+  redisClient = redis.createClient({ port: 3000 });
+  redisClient.on('error', (error) => console.error('Error: ', error));
 
-//   await redisClient.connect();
-// })();
+  await redisClient.connect();
+})();
 
 async function testConnection() {
   try {
@@ -36,5 +36,4 @@ async function testConnection() {
 
 testConnection();
 
-// module.exports = { sequelize, redisClient };
-module.exports = { sequelize };
+module.exports = { sequelize, redisClient };

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const { sequelize } = require('../server/db.js');
-const { Related } = require('../postgres.sql');
+const { sequelize } = require('../server/config/db');
+const { Related } = require('../server/models/initDB');
 require('dotenv').config();
 
 const batchSize = 100;
@@ -45,7 +45,6 @@ fs.createReadStream(
       }
 
       if (Object.keys(groupedRows).length === batchSize) {
-        // Insert into the database when the batch size is reached
         insertBatchIntoDatabase(groupedRows);
       }
     } catch (error) {
@@ -53,12 +52,10 @@ fs.createReadStream(
     }
   })
   .on('end', async () => {
-    // Insert the remaining batch into the database
     if (Object.keys(groupedRows).length > 0) {
       insertBatchIntoDatabase(groupedRows);
     }
 
-    // Close the Sequelize connection
     await sequelize.close();
 
     console.log('CSV file successfully processed');

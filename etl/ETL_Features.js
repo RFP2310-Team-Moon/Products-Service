@@ -1,13 +1,13 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const { sequelize } = require('../server/db.js');
-const { Product } = require('../postgres.sql');
+const { sequelize } = require('../server/config/db');
+const { Feature } = require('../server/models/initDB');
 require('dotenv').config();
 
 const rows = [];
 
 fs.createReadStream(
-  `${process.env.DATA_PATH}/Products-Service/data/product.csv`
+  `${process.env.DATA_PATH}/Products-Service/data/features.csv`
 )
   .pipe(csv())
   .on('data', (row) => {
@@ -17,17 +17,15 @@ fs.createReadStream(
     console.log('CSV file successfully processed');
 
     const transformedData = rows.map((row) => ({
-      product_id: parseInt(row.id, 10),
-      name: row.name,
-      slogan: row.slogan,
-      description: row.description,
-      category: row.category,
-      default_price: parseFloat(row.default_price),
+      feature_id: parseInt(row.id, 10),
+      feature: row.feature,
+      value: row.value,
+      product_id: parseInt(row.product_id, 10),
     }));
 
     try {
       await sequelize.sync();
-      await Product.bulkCreate(transformedData);
+      await Feature.bulkCreate(transformedData);
       console.log('Data loaded into the database successfully');
     } catch (error) {
       console.error('Error loading data into the database:', error);

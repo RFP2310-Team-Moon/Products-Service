@@ -1,7 +1,7 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const { sequelize } = require('../server/db.js');
-const { Sku } = require('../postgres.sql');
+const { sequelize } = require('../server/config/db');
+const { Sku } = require('../server/models/initDB');
 require('dotenv').config();
 
 const batchSize = 100;
@@ -14,9 +14,7 @@ const transformRow = (row) => ({
   quantity: parseInt(row.quantity, 10),
 });
 
-fs.createReadStream(
-  `${process.env.DATA_PATH}/Products-Service/data/skus.csv`
-)
+fs.createReadStream(`${process.env.DATA_PATH}/Products-Service/data/skus.csv`)
   .pipe(csv())
   .on('data', (row) => {
     const transformedRow = transformRow(row);

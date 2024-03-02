@@ -1,6 +1,5 @@
-/* eslint-disable import/extensions */
 const router = require('express').Router();
-const controllers = require('./controllers.js');
+const controllers = require('../controllers/productController');
 require('dotenv').config();
 
 router
